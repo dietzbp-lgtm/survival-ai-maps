@@ -1,0 +1,74 @@
+name: Build map packs
+
+# Cuts regional offline maps out of the latest Protomaps OpenStreetMap build
+# and publishes them as release files the Survival AI app downloads.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/build-maps.yml', 'regions.txt']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the pmtiles tool
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download -R protomaps/go-pmtiles -p '*Linux_x86_64.tar.gz' -O pmtiles.tgz
+          tar -xzf pmtiles.tgz pmtiles
+          ./pmtiles version || true
+
+      - name: Find the latest world map build
+        id: src
+        run: |
+          for i in $(seq 0 10); do
+            d=$(date -u -d "-$i day" +%Y%m%d)
+            url="https://build.protomaps.com/$d.pmtiles"
+            if curl -sfI "$url" > /dev/null; then
+              echo "url=$url" >> "$GITHUB_OUTPUT"
+              echo "::notice::Using $url"
+              exit 0
+            fi
+          done
+          echo "::error::No Protomaps build found in the last 10 days"
+          exit 1
+
+      - name: Cut regions
+        run: |
+          mkdir -p out
+          # id | bbox (west,south,east,north) or "world" | max zoom
+          while IFS='|' read -r id bbox maxzoom; do
+            [ -z "$id" ] && continue
+            case "$id" in \#*) continue;; esac
+            echo "== $id ($bbox, z$maxzoom)"
+            if [ "$bbox" = "world" ]; then
+              ./pmtiles extract "${{ steps.src.outputs.url }}" "out/$id.pmtiles" --maxzoom="$maxzoom"
+            else
+              ./pmtiles extract "${{ steps.src.outputs.url }}" "out/$id.pmtiles" --bbox="$bbox" --maxzoom="$maxzoom"
+            fi
+            size=$(stat -c %s "out/$id.pmtiles")
+            echo "::notice::$id.pmtiles = $size bytes ($((size / 1000000)) MB)"
+            if [ "$size" -ge 2000000000 ]; then
+              echo "::error::$id.pmtiles is over GitHub's 2 GB file limit; lower its max zoom"
+              exit 1
+            fi
+          done < regions.txt
+          ls -la out
+
+      - name: Publish map packs
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: maps-v1
+          name: Map packs v1
+          body: |
+            Offline map packs for Survival AI, cut from the Protomaps build of OpenStreetMap.
+            Map data © OpenStreetMap contributors, Open Database License (ODbL). Tiles by Protomaps.
+          files: out/*.pmtiles

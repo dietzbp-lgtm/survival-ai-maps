@@ -1,0 +1,5 @@
+# id | bbox (west,south,east,north) or "world" | max zoom
+# Each extra zoom level roughly doubles the file size. GitHub allows up to 2 GB per file.
+world|world|6
+florida|-87.7,24.3,-79.8,31.1|14
+brazil|-74.1,-34.0,-28.6,5.4|12
