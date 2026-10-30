@@ -42,6 +42,8 @@ jobs:
           exit 1
 
       - name: Cut regions
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p out
           # id | bbox (west,south,east,north) or "world" | max zoom
@@ -49,6 +51,12 @@ jobs:
             [ -z "$id" ] && continue
             case "$id" in \#*) continue;; esac
             echo "== $id ($bbox, z$maxzoom)"
+            # Packs already published stay as they are, so phones that
+            # downloaded them keep matching files. Delete an asset to rebuild it.
+            if gh release view maps-v1 --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2>/dev/null | grep -qx "$id.pmtiles"; then
+              echo "::notice::$id.pmtiles already published, skipping"
+              continue
+            fi
             if [ "$bbox" = "world" ]; then
               ./pmtiles extract "${{ steps.src.outputs.url }}" "out/$id.pmtiles" --maxzoom="$maxzoom"
             else
@@ -62,8 +70,10 @@ jobs:
             fi
           done < regions.txt
           ls -la out
+          ls out/*.pmtiles >/dev/null 2>&1 || echo '::notice::No new packs to publish'
 
       - name: Publish map packs
+        if: hashFiles('out/*.pmtiles') != ''
         uses: softprops/action-gh-release@v2
         with:
           tag_name: maps-v1
