@@ -1,8 +1,8 @@
 # Survival AI privacy policy
 
-_Last updated: October 30, 2026_
+_Last updated: October 31, 2026_
 
-Survival AI is an offline emergency and survival app for Android, made by Bryan Dietz. This policy explains what happens to your information when you use it.
+Survival AI is an offline emergency and survival app for Android, made by Baywise Labs (Tampa, Florida). This policy explains what happens to your information when you use it.
 
 ## The short version
 
@@ -44,7 +44,7 @@ If this policy changes, the new version will be posted here with a new date.
 
 ## Contact
 
-Questions: dietzbp@gmail.com
+Questions: privacy@baywiselabs.com
 
 ---
 
