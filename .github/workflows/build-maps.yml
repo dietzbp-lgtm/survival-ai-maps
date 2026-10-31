@@ -1,7 +1,8 @@
 name: Build map packs
 
-# Cuts regional offline maps out of the latest Protomaps OpenStreetMap build
-# and publishes them as release files the Survival AI app downloads.
+# Cuts each pack in regions.txt out of the latest Protomaps OpenStreetMap
+# build, publishes it under the maps-v1 release, and then publishes
+# catalog.json: the list of packs the Survival AI app shows.
 on:
   workflow_dispatch:
   push:
@@ -11,20 +12,32 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: build-maps
+  cancel-in-progress: false
+
+env:
+  TAG: maps-v1
+  # Packs bigger than this are rebuilt one zoom level lower.
+  MAX_BYTES: '1500000000'
+
 jobs:
-  build:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    outputs:
+      todo: ${{ steps.plan.outputs.todo }}
+      any: ${{ steps.plan.outputs.any }}
+      src: ${{ steps.src.outputs.url }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install the pmtiles tool
+      - name: Make sure the release exists
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release download -R protomaps/go-pmtiles -p '*Linux_x86_64.tar.gz' -O pmtiles.tgz
-          tar -xzf pmtiles.tgz pmtiles
-          ./pmtiles version || true
+          gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create "$TAG" -R "$GITHUB_REPOSITORY" --title "Map packs v1" \
+              --notes "Offline map packs for Survival AI, cut from the Protomaps build of OpenStreetMap. Map data © OpenStreetMap contributors, Open Database License (ODbL). Tiles by Protomaps."
 
       - name: Find the latest world map build
         id: src
@@ -41,44 +54,129 @@ jobs:
           echo "::error::No Protomaps build found in the last 10 days"
           exit 1
 
-      - name: Cut regions
+      - name: List packs that still need building
+        id: plan
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p out
-          # id | bbox (west,south,east,north) or "world" | max zoom
-          while IFS='|' read -r id bbox maxzoom; do
-            [ -z "$id" ] && continue
-            case "$id" in \#*) continue;; esac
-            echo "== $id ($bbox, z$maxzoom)"
-            # Packs already published stay as they are, so phones that
-            # downloaded them keep matching files. Delete an asset to rebuild it.
-            if gh release view maps-v1 --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2>/dev/null | grep -qx "$id.pmtiles"; then
-              echo "::notice::$id.pmtiles already published, skipping"
-              continue
-            fi
-            if [ "$bbox" = "world" ]; then
-              ./pmtiles extract "${{ steps.src.outputs.url }}" "out/$id.pmtiles" --maxzoom="$maxzoom"
-            else
-              ./pmtiles extract "${{ steps.src.outputs.url }}" "out/$id.pmtiles" --bbox="$bbox" --maxzoom="$maxzoom"
-            fi
-            size=$(stat -c %s "out/$id.pmtiles")
-            echo "::notice::$id.pmtiles = $size bytes ($((size / 1000000)) MB)"
-            if [ "$size" -ge 2000000000 ]; then
-              echo "::error::$id.pmtiles is over GitHub's 2 GB file limit; lower its max zoom"
-              exit 1
-            fi
-          done < regions.txt
-          ls -la out
-          ls out/*.pmtiles >/dev/null 2>&1 || echo '::notice::No new packs to publish'
+          gh release view "$TAG" -R "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' > published.txt || true
+          python3 - <<'EOF'
+          import json, os
+          published = set(open('published.txt').read().split())
+          todo = []
+          for line in open('regions.txt'):
+              line = line.strip()
+              if not line or line.startswith('#'):
+                  continue
+              pid, country, kind, name, bbox, zoom = [p.strip() for p in line.split('|')]
+              if f'{pid}.pmtiles' in published:
+                  continue
+              todo.append({'id': pid, 'bbox': bbox, 'zoom': int(zoom)})
+          print(f'{len(todo)} packs to build:', [t['id'] for t in todo])
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f"todo={json.dumps(todo)}\n")
+              out.write(f"any={'true' if todo else 'false'}\n")
+          EOF
 
-      - name: Publish map packs
-        if: hashFiles('out/*.pmtiles') != ''
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: maps-v1
-          name: Map packs v1
-          body: |
-            Offline map packs for Survival AI, cut from the Protomaps build of OpenStreetMap.
-            Map data © OpenStreetMap contributors, Open Database License (ODbL). Tiles by Protomaps.
-          files: out/*.pmtiles
+  build:
+    needs: plan
+    if: needs.plan.outputs.any == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix:
+        pack: ${{ fromJson(needs.plan.outputs.todo) }}
+    steps:
+      - name: Install the pmtiles tool
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download -R protomaps/go-pmtiles -p '*Linux_x86_64.tar.gz' -O pmtiles.tgz
+          tar -xzf pmtiles.tgz pmtiles
+
+      - name: Cut ${{ matrix.pack.id }}
+        env:
+          ID: ${{ matrix.pack.id }}
+          BBOX: ${{ matrix.pack.bbox }}
+          ZOOM: ${{ matrix.pack.zoom }}
+          SRC: ${{ needs.plan.outputs.src }}
+        run: |
+          z=$ZOOM
+          while :; do
+            rm -f "$ID.pmtiles"
+            if [ "$BBOX" = "world" ]; then
+              ./pmtiles extract "$SRC" "$ID.pmtiles" --maxzoom="$z"
+            else
+              ./pmtiles extract "$SRC" "$ID.pmtiles" --bbox="$BBOX" --maxzoom="$z"
+            fi
+            size=$(stat -c %s "$ID.pmtiles")
+            echo "::notice::$ID at zoom $z = $((size / 1000000)) MB"
+            if [ "$size" -le "$MAX_BYTES" ] || [ "$z" -le 8 ]; then break; fi
+            z=$((z - 1))
+            echo "::warning::$ID is too big; trying zoom $z"
+          done
+
+      - name: Publish ${{ matrix.pack.id }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ID: ${{ matrix.pack.id }}
+        run: |
+          for i in 1 2 3; do
+            gh release upload "$TAG" "$ID.pmtiles" -R "$GITHUB_REPOSITORY" --clobber && exit 0
+            sleep 20
+          done
+          exit 1
+
+  catalog:
+    needs: [plan, build]
+    if: always() && needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Make catalog.json from the published packs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$TAG" -R "$GITHUB_REPOSITORY" --json assets \
+            --jq '[.assets[] | {name, size}]' > assets.json
+          python3 - <<'EOF'
+          import json, os, subprocess
+          repo = os.environ['GITHUB_REPOSITORY']
+          tag = os.environ['TAG']
+          sizes = {a['name']: a['size'] for a in json.load(open('assets.json'))}
+          packs = []
+          for line in open('regions.txt'):
+              line = line.strip()
+              if not line or line.startswith('#'):
+                  continue
+              pid, country, kind, name, bbox, zoom = [p.strip() for p in line.split('|')]
+              file = f'{pid}.pmtiles'
+              if file not in sizes:
+                  print(f'::warning::{file} is not published yet')
+                  continue
+              url = f'https://github.com/{repo}/releases/download/{tag}/{file}'
+              # The real max zoom (byte 101 of the PMTiles v3 header), which
+              # can be lower than asked for when a pack was too big.
+              head = subprocess.run(['curl', '-sfL', '-r', '0-126', url], capture_output=True).stdout
+              maxzoom = head[101] if len(head) >= 127 and head[:7] == b'PMTiles' else int(zoom)
+              if bbox == 'world':
+                  w, s, e, n = -180, -85, 180, 85
+              else:
+                  w, s, e, n = [float(x) for x in bbox.split(',')]
+              packs.append({
+                  'id': pid, 'country': country, 'kind': kind, 'name': name,
+                  'file': file, 'bytes': sizes[file], 'maxzoom': maxzoom,
+                  'bbox': [w, s, e, n],
+              })
+          json.dump({'version': 1, 'packs': packs}, open('catalog.json', 'w'),
+                    ensure_ascii=False, indent=1)
+          print(f'{len(packs)} packs in the catalog')
+          EOF
+
+      - name: Publish catalog.json
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$TAG" catalog.json -R "$GITHUB_REPOSITORY" --clobber

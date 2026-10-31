@@ -1,8 +1,86 @@
-# id | bbox (west,south,east,north) or "world" | max zoom
-# Each extra zoom level roughly doubles the file size. GitHub allows up to 2 GB per file.
-world|world|6
-florida|-87.7,24.3,-79.8,31.1|14
-brazil|-74.1,-34.0,-28.6,5.4|12
-usa|-125.0,24.4,-66.9,49.4|11
-sao-paulo|-47.2,-24.1,-46.3,-23.3|14
-rio|-43.8,-23.1,-42.9,-22.6|14
+# Map packs for Survival AI.
+# id | country code | kind | name | bbox (west,south,east,north) or "world" | max zoom
+#
+# kind: world = overview of the planet; country = a whole country;
+#       region or city = street level for a state, city or metro area.
+# Max zoom 13 or more gives street level and walking/driving routes.
+# Each extra zoom level roughly doubles the size. A pack bigger than 1.5 GB is
+# rebuilt one zoom level lower automatically (GitHub allows 2 GB per file).
+# Published packs are never rebuilt; delete the release asset to rebuild one.
+
+world|--|world|World overview|world|6
+
+# ---- Americas
+usa|US|country|United States|-125.0,24.4,-66.9,49.4|11
+florida|US|region|Florida|-87.7,24.3,-79.8,31.1|14
+new-york|US|city|New York City area|-74.6,40.3,-73.4,41.2|14
+los-angeles|US|city|Los Angeles area|-118.95,33.6,-117.6,34.4|14
+chicago|US|city|Chicago area|-88.4,41.4,-87.5,42.3|14
+houston|US|city|Houston area|-95.9,29.4,-94.9,30.2|14
+dallas|US|city|Dallas–Fort Worth area|-97.6,32.5,-96.5,33.3|14
+san-francisco|US|city|San Francisco Bay Area|-122.7,37.2,-121.7,38.1|14
+canada|CA|country|Canada (south)|-141.0,41.7,-52.6,60.0|10
+toronto|CA|city|Toronto area|-80.2,43.3,-78.8,44.1|14
+montreal|CA|city|Montréal area|-74.1,45.3,-73.3,45.75|14
+vancouver|CA|city|Vancouver area|-123.4,49.0,-122.4,49.45|14
+mexico|MX|country|Mexico|-117.2,14.5,-86.7,32.8|11
+mexico-city|MX|city|Mexico City area|-99.4,19.1,-98.9,19.7|14
+brazil|BR|country|Brazil|-74.1,-34.0,-28.6,5.4|12
+sao-paulo|BR|city|São Paulo area|-47.2,-24.1,-46.3,-23.3|14
+rio|BR|city|Rio de Janeiro area|-43.8,-23.1,-42.9,-22.6|14
+argentina|AR|country|Argentina|-73.6,-55.1,-53.6,-21.8|10
+buenos-aires|AR|city|Buenos Aires area|-58.9,-35.0,-58.2,-34.4|14
+colombia|CO|country|Colombia|-79.1,-4.3,-66.8,12.5|11
+bogota|CO|city|Bogotá area|-74.25,4.45,-73.95,4.85|14
+chile|CL|country|Chile|-75.8,-56.0,-66.4,-17.5|10
+santiago|CL|city|Santiago area|-70.9,-33.7,-70.45,-33.3|14
+peru|PE|country|Peru|-81.4,-18.4,-68.6,0.0|11
+lima|PE|city|Lima area|-77.2,-12.3,-76.8,-11.8|14
+
+# ---- Europe
+united-kingdom|GB|country|United Kingdom|-8.7,49.8,1.8,60.9|13
+london|GB|city|London area|-0.55,51.25,0.35,51.72|14
+ireland|IE|country|Ireland|-10.7,51.4,-5.9,55.45|14
+france|FR|country|France|-5.2,41.3,9.6,51.1|12
+paris|FR|city|Paris area|1.9,48.6,2.8,49.1|14
+germany|DE|country|Germany|5.8,47.2,15.1,55.1|12
+berlin|DE|city|Berlin area|13.05,52.33,13.8,52.68|14
+spain|ES|country|Spain|-9.4,35.9,4.4,43.8|12
+madrid|ES|city|Madrid area|-3.95,40.25,-3.5,40.6|14
+portugal|PT|country|Portugal|-9.6,36.9,-6.1,42.2|13
+italy|IT|country|Italy|6.6,36.6,18.6,47.1|12
+rome|IT|city|Rome area|12.3,41.75,12.7,42.05|14
+netherlands|NL|country|Netherlands|3.3,50.7,7.3,53.6|13
+belgium|BE|country|Belgium|2.5,49.5,6.4,51.5|13
+switzerland|CH|country|Switzerland|5.9,45.8,10.5,47.85|13
+austria|AT|country|Austria|9.5,46.35,17.2,49.05|13
+poland|PL|country|Poland|14.1,49.0,24.2,54.9|12
+sweden|SE|country|Sweden|11.0,55.3,24.2,69.1|11
+norway|NO|country|Norway|4.5,57.9,31.2,71.2|11
+greece|GR|country|Greece|19.3,34.8,28.3,41.8|12
+
+# ---- Asia and the Pacific
+japan|JP|country|Japan|122.9,24.0,146.0,45.6|11
+tokyo|JP|city|Tokyo area|139.4,35.45,140.0,35.9|14
+osaka|JP|city|Osaka area|135.3,34.5,135.75,34.85|14
+south-korea|KR|country|South Korea|125.0,33.1,130.0,38.7|12
+seoul|KR|city|Seoul area|126.75,37.4,127.2,37.7|14
+philippines|PH|country|Philippines|116.9,4.6,126.7,21.2|11
+manila|PH|city|Metro Manila|120.9,14.35,121.15,14.8|14
+india|IN|country|India|68.1,6.7,97.4,35.6|10
+delhi|IN|city|Delhi area|76.85,28.4,77.5,28.9|14
+mumbai|IN|city|Mumbai area|72.75,18.85,73.1,19.3|14
+indonesia|ID|country|Indonesia|95.0,-11.0,141.0,6.0|9
+jakarta|ID|city|Jakarta area|106.65,-6.4,107.0,-6.05|14
+australia|AU|country|Australia|112.9,-43.7,153.7,-10.6|10
+sydney|AU|city|Sydney area|150.5,-34.2,151.4,-33.5|14
+melbourne|AU|city|Melbourne area|144.6,-38.1,145.4,-37.6|14
+new-zealand|NZ|country|New Zealand|166.3,-47.4,178.6,-34.3|12
+
+# ---- Africa
+south-africa|ZA|country|South Africa|16.4,-34.9,32.9,-22.1|11
+johannesburg|ZA|city|Johannesburg and Pretoria|27.8,-26.4,28.4,-25.6|14
+nigeria|NG|country|Nigeria|2.6,4.2,14.7,13.9|11
+lagos|NG|city|Lagos area|3.0,6.35,3.7,6.75|14
+kenya|KE|country|Kenya|33.9,-4.7,41.9,5.0|11
+nairobi|KE|city|Nairobi area|36.65,-1.45,37.1,-1.15|14
