@@ -24,10 +24,10 @@ Your medical ID and family plan can include health details. They are used only i
 
 ## Downloads
 
-The app connects to the internet only when you choose to download something:
+The app connects to the internet only when you choose to download something, or open the map download list:
 
 - **AI models** come from Hugging Face (huggingface.co).
-- **Maps** come from GitHub (github.com).
+- **Maps**, and the list of available maps, come from GitHub (github.com).
 
 As with any download, those servers see your device's IP address and basic connection details, which they handle under their own privacy policies. We don't receive that information. Nothing you type or save in the app is sent with a download. After the downloads are done, the app works with no internet at all.
 
@@ -40,7 +40,7 @@ As with any download, those servers see your device's IP address and basic conne
 ## Permissions
 
 - **Location (precise and approximate):** used to show your position on the offline map and to plan routes. Location is optional, and the rest of the app works without it.
-- **Internet:** used only to download AI models and maps when you ask.
+- **Internet:** used only to download AI models and maps, and the list of available maps, when you ask.
 - **Flashlight:** the flashlight and SOS signal turn on your phone's light. The app never takes photos or video.
 
 ## Deleting your information
