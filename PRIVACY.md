@@ -1,8 +1,8 @@
-# Survival AI privacy policy
+# Fieldmend privacy policy
 
 _Effective date: October 31, 2026_
 
-Survival AI is an offline emergency and survival app for Android, made by Baywise Labs in Tampa, Florida ("we", "us"). This policy explains what happens to your information when you use the app.
+Fieldmend is an offline emergency and survival app for Android, made by BaywiseLabs in Tampa, Florida ("we", "us"). This policy explains what happens to your information when you use the app.
 
 ## The short version
 
@@ -48,14 +48,14 @@ As with any download, those servers see your device's IP address and basic conne
 You're always in control of your information, because it lives only on your phone:
 
 - **Delete people, contacts or saved spots** inside the app.
-- **Delete everything at once:** go to Settings → Apps → Survival AI → Storage → Clear data.
+- **Delete everything at once:** go to Settings → Apps → Fieldmend → Storage → Clear data.
 - **Uninstall the app:** this removes all of its data from your phone.
 
 We don't hold a copy, so there's nothing for us to delete.
 
 ## Your privacy rights
 
-Some privacy laws give you rights over your personal information, including the GDPR in Europe, the LGPD in Brazil and US state laws such as California's. These rights can include access, correction, deletion and objecting to sale or sharing. Survival AI doesn't collect, sell or share personal information, so we hold none of your data to act on. You can still contact us with any question or request at the address below, and we will answer.
+Some privacy laws give you rights over your personal information, including the GDPR in Europe, the LGPD in Brazil and US state laws such as California's. These rights can include access, correction, deletion and objecting to sale or sharing. Fieldmend doesn't collect, sell or share personal information, so we hold none of your data to act on. You can still contact us with any question or request at the address below, and we will answer.
 
 ## Security
 
@@ -63,11 +63,11 @@ Your data stays in the app's private storage, which is protected by Android's se
 
 ## Children
 
-Survival AI is meant for general audiences and isn't directed at children under 13. The app doesn't collect personal information from anyone, children included.
+Fieldmend is meant for general audiences and isn't directed at children under 13. The app doesn't collect personal information from anyone, children included.
 
 ## Medical and safety notice
 
-Survival AI gives general first-aid and survival information. The AI can make mistakes. The app isn't medical advice and doesn't replace a doctor or emergency services. **In an emergency, call 911 in the US or your local emergency number (192 SAMU or 193 in Brazil) if you can.**
+Fieldmend gives general first-aid and survival information. The AI can make mistakes. The app isn't medical advice and doesn't replace a doctor or emergency services. **In an emergency, call 911 in the US or your local emergency number (192 SAMU or 193 in Brazil) if you can.**
 
 ## Changes to this policy
 
@@ -75,12 +75,12 @@ If we change this policy, we will post the new version here with a new effective
 
 ## Contact
 
-Baywise Labs, Tampa, Florida, USA
+BaywiseLabs, Tampa, Florida, USA
 Email: privacy@baywiselabs.com
 Website: baywiselabs.com
 
 ---
 
-**Español:** Survival AI no recopila, vende ni comparte tus datos. Todo lo que escribes o guardas (preguntas, ubicación, plan familiar, ficha médica) se queda en tu teléfono. La app solo usa internet cuando tú pides descargar modelos de IA (Hugging Face) o mapas (GitHub). Para borrar todo, desinstala la app o borra sus datos en Ajustes. Preguntas: privacy@baywiselabs.com
+**Español:** Fieldmend no recopila, vende ni comparte tus datos. Todo lo que escribes o guardas (preguntas, ubicación, plan familiar, ficha médica) se queda en tu teléfono. La app solo usa internet cuando tú pides descargar modelos de IA (Hugging Face) o mapas (GitHub). Para borrar todo, desinstala la app o borra sus datos en Ajustes. Preguntas: privacy@baywiselabs.com
 
-**Português:** O Survival AI não coleta, vende nem compartilha seus dados. Tudo o que você digita ou salva (perguntas, localização, plano familiar, ficha médica) fica no seu celular. O app só usa a internet quando você pede para baixar modelos de IA (Hugging Face) ou mapas (GitHub). Para apagar tudo, desinstale o app ou limpe os dados nas Configurações. Seus direitos pela LGPD: fale conosco em privacy@baywiselabs.com
+**Português:** O Fieldmend não coleta, vende nem compartilha seus dados. Tudo o que você digita ou salva (perguntas, localização, plano familiar, ficha médica) fica no seu celular. O app só usa a internet quando você pede para baixar modelos de IA (Hugging Face) ou mapas (GitHub). Para apagar tudo, desinstale o app ou limpe os dados nas Configurações. Seus direitos pela LGPD: fale conosco em privacy@baywiselabs.com

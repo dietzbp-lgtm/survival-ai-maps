@@ -1,6 +1,6 @@
 # survival-ai-maps
 
-Offline map packs for the Survival AI app.
+Offline map packs for the Fieldmend app.
 
 The **Build map packs** workflow cuts each pack in `regions.txt` out of the latest
 [Protomaps](https://protomaps.com) build of OpenStreetMap and publishes it as a file

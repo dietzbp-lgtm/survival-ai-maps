@@ -37,7 +37,7 @@ jobs:
         run: |
           gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
             gh release create "$TAG" -R "$GITHUB_REPOSITORY" --title "Map packs v1" \
-              --notes "Offline map packs for Survival AI, cut from the Protomaps build of OpenStreetMap. Map data © OpenStreetMap contributors, Open Database License (ODbL). Tiles by Protomaps."
+              --notes "Offline map packs for Fieldmend, cut from the Protomaps build of OpenStreetMap. Map data © OpenStreetMap contributors, Open Database License (ODbL). Tiles by Protomaps."
 
       - name: Find the latest world map build
         id: src
