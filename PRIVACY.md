@@ -1,22 +1,24 @@
 # Fieldmend privacy policy
 
-_Effective date: October 31, 2026_
+_Effective date: November 2, 2026_
 
 Fieldmend is an offline emergency and survival app for Android, made by BaywiseLabs in Tampa, Florida ("we", "us"). This policy explains what happens to your information when you use the app.
 
 ## The short version
 
-- **We collect no personal information.** We have no servers that receive your data, so we couldn't see your information even if we wanted to.
-- **What you type or save stays on your phone.** That includes your questions, your location, saved spots, your family plan and your medical ID.
-- **No accounts, ads, analytics, tracking or crash reports.**
-- **We never sell or share your information.** We don't collect it in the first place.
+- **The app doesn't send your in-app data to us.** We have no servers that receive it. If you email us, call us, send a report or join our beta, we receive the information you give us and use it only to answer you, fix the app or run the beta.
+- **What you type or save stays on your device**, unless you use Android backup (see below). That includes your questions, your location, saved spots, your family plan and your medical ID.
+- **No accounts, ads, analytics or tracking.** The app doesn't include a crash-reporting SDK. Google Play may give us combined app performance and crash data.
+- **We never sell or share your information.**
 
 ## What stays on your phone
+
+These stay on your phone and are never sent to us. The only copy that can leave your phone is your own Android backup, if you have it turned on (see "Google Play and Android").
 
 - **Chat questions and AI answers.** The AI runs entirely on your phone. Your questions and the answers are never sent to us or to any other company.
 - **Your location.** The app uses your phone's GPS to show where you are on the offline map, measure distances, point the way and plan walking or driving routes. It reads your location only while the app is open, and only on the phone. The app never asks for background location and never sends your location anywhere.
 - **Saved spots, family plan and medical ID.** This covers names, birth years, blood types, allergies, medicines, conditions, doctors, contacts, meeting points and notes. All of it is stored in the app's private storage on your phone, where other apps can't read it.
-- **Language and appearance settings.** These are also stored only on your phone.
+- **Language and appearance settings.** These are also stored on your phone.
 
 ## Sensitive health information
 
@@ -31,9 +33,17 @@ The app connects to the internet only when you choose to download something, or 
 
 As with any download, those servers see your device's IP address and basic connection details, which they handle under their own privacy policies. We don't receive that information. Nothing you type or save in the app is sent with a download. After the downloads are done, the app works with no internet at all.
 
+## Reports, support and beta testing
+
+- **Reporting an AI answer.** Each AI answer has a "Report this answer" button. It opens a report in your own email app, addressed to us. You choose whether the report includes your question and the AI's answer, and nothing is sent until you press send in your email app. We receive the email address you send from and what the report says, and we use it only to review the answer and improve the app.
+- **Contacting us.** If you email or call us, we receive your email address or phone number and what you tell us, and we use it only to answer you.
+- **Beta testing.** If you join our beta, we receive the email address you join with, and any feedback you send, and use them only to run the beta.
+
+We keep these messages only as long as we need them for these purposes, and you can ask us to delete them at any time.
+
 ## Google Play and Android
 
-- **Google Play.** Google handles installing and updating the app through Google Play, under Google's own privacy policy.
+- **Google Play.** Google handles installing and updating the app through Google Play, under Google's own privacy policy. Google Play may give us combined statistics about installs, app performance and crashes (for example, which phone model a crash happened on). These don't include what you type or save in the app.
 - **Android backup.** If Android backup is turned on, Android may include the app's data in your phone's backup to your own Google account. That's so a new phone can restore it. Google encrypts that backup, and we can't access it. You can turn backup off in your phone's settings.
 - **Copying.** When you copy coordinates or a phone number, it goes to your phone's clipboard, where other apps on your phone may be able to read it.
 
@@ -45,17 +55,17 @@ As with any download, those servers see your device's IP address and basic conne
 
 ## Deleting your information
 
-You're always in control of your information, because it lives only on your phone:
+You're always in control of your app data, because it lives on your phone:
 
 - **Delete people, contacts or saved spots** inside the app.
 - **Delete everything at once:** go to Settings → Apps → Fieldmend → Storage → Clear data.
 - **Uninstall the app:** this removes all of its data from your phone.
 
-We don't hold a copy, so there's nothing for us to delete.
+We don't hold a copy of your app data. To delete a report or message you sent us, email us and we'll delete it.
 
 ## Your privacy rights
 
-Some privacy laws give you rights over your personal information, including the GDPR in Europe, the LGPD in Brazil and US state laws such as California's. These rights can include access, correction, deletion and objecting to sale or sharing. Fieldmend doesn't collect, sell or share personal information, so we hold none of your data to act on. You can still contact us with any question or request at the address below, and we will answer.
+Some privacy laws give you rights over your personal information, including the GDPR in Europe, the LGPD in Brazil and US state laws such as California's. These rights can include access, correction, deletion and objecting to sale or sharing. Fieldmend doesn't sell or share personal information, and the app doesn't send your app data to us. The only personal information we may hold is what you send us yourself (an email, a report or a beta sign-up). You can ask us to see, correct or delete it at the address below, and we will answer.
 
 ## Security
 
@@ -63,11 +73,11 @@ Your data stays in the app's private storage, which is protected by Android's se
 
 ## Children
 
-Fieldmend is meant for general audiences and isn't directed at children under 13. The app doesn't collect personal information from anyone, children included.
+Fieldmend is meant for general audiences and isn't directed at children under 13. The app doesn't send personal information to us from anyone, children included.
 
 ## Medical and safety notice
 
-Fieldmend gives general first-aid and survival information. The AI can make mistakes. The app isn't medical advice and doesn't replace a doctor or emergency services. **In an emergency, call 911 in the US or your local emergency number (192 SAMU or 193 in Brazil) if you can.**
+Fieldmend gives general first-aid and survival information. The AI can make mistakes. The app isn't medical advice and doesn't replace a doctor or emergency services. **In an emergency, call your local emergency number (911 in the US, 112 in Europe) if you can.** The app shows the number for the country you choose.
 
 ## Changes to this policy
 
@@ -76,11 +86,12 @@ If we change this policy, we will post the new version here with a new effective
 ## Contact
 
 BaywiseLabs, Tampa, Florida, USA
-Email: privacy@baywiselabs.com
+Privacy questions: privacy@baywiselabs.com
+Support and AI answer reports: support@baywiselabs.com
 Website: baywiselabs.com
 
 ---
 
-**Español:** Fieldmend no recopila, vende ni comparte tus datos. Todo lo que escribes o guardas (preguntas, ubicación, plan familiar, ficha médica) se queda en tu teléfono. La app solo usa internet cuando tú pides descargar modelos de IA (Hugging Face) o mapas (GitHub). Para borrar todo, desinstala la app o borra sus datos en Ajustes. Preguntas: privacy@baywiselabs.com
+**Español:** La app Fieldmend no nos envía tus datos, y no los vendemos ni compartimos. Todo lo que escribes o guardas (preguntas, ubicación, plan familiar, ficha médica) se queda en tu teléfono, salvo la copia de seguridad de Android si la usas. Si nos escribes o envías un reporte, solo usamos esa información para responderte. La app solo usa internet cuando tú pides descargar modelos de IA (Hugging Face) o mapas (GitHub). Para borrar todo, desinstala la app o borra sus datos en Ajustes. Preguntas: privacy@baywiselabs.com
 
-**Português:** O Fieldmend não coleta, vende nem compartilha seus dados. Tudo o que você digita ou salva (perguntas, localização, plano familiar, ficha médica) fica no seu celular. O app só usa a internet quando você pede para baixar modelos de IA (Hugging Face) ou mapas (GitHub). Para apagar tudo, desinstale o app ou limpe os dados nas Configurações. Seus direitos pela LGPD: fale conosco em privacy@baywiselabs.com
+**Português:** O app Fieldmend não nos envia seus dados, e não os vendemos nem compartilhamos. Tudo o que você digita ou salva (perguntas, localização, plano familiar, ficha médica) fica no seu celular, exceto o backup do Android, se você usar. Se você nos escrever ou enviar uma denúncia, usamos essas informações só para responder. O app só usa a internet quando você pede para baixar modelos de IA (Hugging Face) ou mapas (GitHub). Para apagar tudo, desinstale o app ou limpe os dados nas Configurações. Seus direitos pela LGPD: fale conosco em privacy@baywiselabs.com
